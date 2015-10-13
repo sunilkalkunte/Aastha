@@ -1,5 +1,9 @@
-<ion-view title="Sign Up">
+<ion-view title="Sign Up!" class="signup-background" >
+<ion-nav-buttons side="left">
+    <a class="button button-icon icon ion-ios-arrow-back" href="#/"></a>
+  </ion-nav-buttons>   
     <ion-content padding="true" class="has-header">
+        <img src="img/aastha_logo.png" height="70%" width="70%"></img>
         <form>
             <ion-list>
                 <label class="item item-input">
@@ -8,14 +12,14 @@
                 </label>
                 <label class="item item-input">
                     <span class="input-label">Email</span>
-                    <input type="email" placeholder="you@domain.com" ng-model="data.email">
+                    <input type="email" placeholder="you@nttdata.com" ng-model="data.email">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">Password</span>
                     <input type="password" placeholder="At least 6 characters" ng-model="data.password">
                 </label>
             </ion-list>
-            <button class="button button-stable button-block" ng-click="signupEmail()">Done</button>
+            <button class="button button-calm button-block" ng-click="signupEmail()">Sign Up</button>
         </form>
     </ion-content>
 </ion-view>

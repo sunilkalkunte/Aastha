@@ -1,0 +1,14 @@
+<ion-view view-title="View All Donations">
+<ion-nav-buttons side="right">
+    <a class="button button-icon icon ion-log-out" href="#/"></a>
+  </ion-nav-buttons>
+   
+    <ion-content>
+        <div class="list">
+            <a ng-repeat="item in items" href="#/{{item.id}}" class="item">
+                <h3>{{ item.item }}</h2>
+                <p>Category: {{ item.type }} | Count: {{ item.count }} | NGO: {{ item.ngo }}</p>                
+            </a>
+        </div>
+    </ion-content>
+</ion-view>
