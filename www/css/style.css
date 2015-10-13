@@ -1,6 +1,6 @@
 /* Empty. Add your own CSS if you like */
 .signup-background {
-    background-image: url('/img/bg1.jpg')
+    background-image: url('img/bg1.jpg')
 }
 body {
   cursor: url('http://ionicframework.com/img/finger.png'), auto;
