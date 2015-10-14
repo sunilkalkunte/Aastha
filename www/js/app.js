@@ -88,7 +88,7 @@ angular.module('aastha', ['ionic'])
 
         }];
     })
-    .controller('LoginCtrl', function($scope, $state) {
+    .controller('LoginCtrl', function($scope, $state, $ionicLoading) {
 
         $scope.data = {};
 
@@ -102,11 +102,14 @@ angular.module('aastha', ['ionic'])
 
             // other fields can be set just like with Parse.Object
             user.set("somethingelse", "like this!");
-
+            $ionicLoading.show({
+                template: 'Completing Signup...'
+            });
             user.signUp(null, {
                 success: function(user) {
                     // Hooray! Let them use the app now.
                     //alert("success!");
+                    $ionicLoading.hide();
                     $state.go('signin');
 
                 },
@@ -119,11 +122,15 @@ angular.module('aastha', ['ionic'])
         };
 
         $scope.loginEmail = function() {
+            $ionicLoading.show({
+                template: 'Signing in...'
+            });
             Parse.User.logIn($scope.data.username, $scope.data.password, {
                 success: function(user) {
                     // Do stuff after successful login.
                     console.log(user);
                     //alert("success!");
+                    $ionicLoading.hide();
                     $state.go('ngolanding.home');
                 },
                 error: function(user, error) {

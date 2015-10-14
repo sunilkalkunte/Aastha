@@ -13,12 +13,14 @@
                     <input type="password" placeholder="enter your password..." ng-model="data.password">
                 </label>
             </ion-list>
-            <div class="button-bar">
-            <ion-button class="button icon-left ion-log-in button-calm" ng-click="loginEmail()">Login</ion-button>
-            <a href="#/signup" class="button icon-left ion-person-add button-calm">SignUp</a>
-            </div>
+            
+            <ion-button class="button icon-left ion-log-in button-calm button-block" ng-click="loginEmail()">Login</ion-button>
+           
             
         </form>
-       
+        <div class="row">
+            <p style="color:#FFFFFF">Not Registered? <a href="#/signup" class="button button-small icon-left ion-person-add
+ button-calm">SignUp</a></p>
+           </div>
     </ion-content>
 </ion-view>

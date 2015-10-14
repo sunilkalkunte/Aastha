@@ -8,14 +8,16 @@
       Ionic Framework Team&#xD;
     </author>
   <content src="index.html"/>
-  <access origin="*"/>
+ <icon src="icons/android/icon1x.png" width="60" height="60" />
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
-  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="DisallowOverscrol<icon src="icons/ios/icon-60.png" width="60" height="60" />l" value="true"/>
   <preference name="android-minSdkVersion" value="16"/>
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="3000"/>
+  <allow-navigation href="https://api.parse.com/*" />
+  <access origin="https://api.parse.com/*" />
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>

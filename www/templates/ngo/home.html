@@ -1,14 +1,18 @@
 <ion-view view-title="View All Donations">
-<ion-nav-buttons side="right">
-    <a class="button button-icon icon ion-log-out" href="#/"></a>
-  </ion-nav-buttons>
-   
+    <ion-nav-buttons side="right">
+        <a class="button button-icon icon ion-log-out" href="#/"></a>
+    </ion-nav-buttons>
     <ion-content>
-        <div class="list">
-            <a ng-repeat="item in items" href="#/{{item.id}}" class="item">
+        <ion-list>
+            <ion-item class="item-remove-animate item-avatar item-icon-right chat-item" ng-repeat="item in items" type="item-text-wrap" href="#/tab/items/{{item.id}}">
+                <img ng-src="{{item.image}}">
                 <h3>{{ item.item }}</h2>
-                <p>Category: {{ item.type }} | Count: {{ item.count }} | NGO: {{ item.ngo }}</p>                
-            </a>
-        </div>
+                    <p class="listtext">Category: {{ item.type }} | Count: {{ item.count }} | NGO: {{ item.ngo }}</p>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                    <ion-option-button class="button-assertive" ng-click="remove(chat)">
+                        Delete
+                    </ion-option-button>
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>
