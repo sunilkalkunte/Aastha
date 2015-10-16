@@ -1,0 +1,47 @@
+<ion-view title="Make a Donation">
+    <ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-ios-arrow-back" href="#/ngolanding/home"></a>
+    </ion-nav-buttons>
+    <ion-content class="has-header">
+        <form ng-submit="createTask(task)">
+            <div class="list">
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Category
+                    </div>
+                    <select ng-model="contribution.category">
+                        <option selected>Select one</option>
+                        <option>Computers</option>
+                        <option>Clothes</option>
+                        <option>Books</option>
+                        <option>Electronics</option>
+                    </select>
+                </label>
+                <label class="item item-input">
+                    <input type="text" placeholder="Count" ng-model="contribution.count">
+                </label>
+                <label class="item item-input">
+                    <input type="text" placeholder="Description" ng-model="contribution.comments">
+                </label>
+                <label class="item item-input">
+                    <input type="text" placeholder="Amount" ng-model="contribution.amount">
+                </label>
+               <!--  <label class="item item-input">
+                    <input type="text" placeholder="User" ng-model="contribution.username">
+                </label> -->
+                <!-- <label class="item item-input">
+	          <input type="text" 
+	          placeholder="Pick date" 
+	          ng-model="datepicker" 
+	          name="datepicker" 
+	          ng-click="opendateModal()" 
+	          >
+	        </label> -->
+            </div>
+            <button ng-click="getPhoto()" class="button button-small button-calm">Add Photo</button>
+            <div class="padding">
+                <button type="submit" ng-click="submitContrib()" class="button button-block button-positive">Submit</button>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>

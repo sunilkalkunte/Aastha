@@ -6,21 +6,25 @@
 angular.module('aastha', ['ionic'])
 
 .run(function($ionicPlatform) {
-    $ionicPlatform.ready(function() {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
-        if (window.cordova && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        }
-        if (window.StatusBar) {
-            StatusBar.styleDefault();
-        }
+        $ionicPlatform.ready(function() {
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if (window.cordova && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            }
+            if (window.StatusBar) {
+                StatusBar.styleDefault();
+            }
 
-        Parse.initialize("QBV7sEoIudXui7MltZNc0kH8S0UQizJ1QRNcQeLf", "PAj8p84BMS8yk83Dzx03B0F35ONOJtWBlS8OTkgV");
-    });
-})
+            Parse.initialize("QBV7sEoIudXui7MltZNc0kH8S0UQizJ1QRNcQeLf", "PAj8p84BMS8yk83Dzx03B0F35ONOJtWBlS8OTkgV");
+        });
+    })
+    .config(['$ionicConfigProvider', function($ionicConfigProvider) {
 
-.config(function($stateProvider, $urlRouterProvider) {
+        $ionicConfigProvider.tabs.position('bottom'); // other values: top
+
+    }])
+    .config(function($stateProvider, $urlRouterProvider) {
 
         $stateProvider
             .state('login', {
@@ -41,7 +45,7 @@ angular.module('aastha', ['ionic'])
             .state('ngolanding', {
                 url: '/ngolanding',
                 abstract: true,
-                templateUrl: 'templates/ngo/ngolanding.html'
+                templateUrl: 'templates/ngo/hometabs.html'
             })
             .state('ngolanding.home', {
                 url: "/home",
@@ -53,7 +57,7 @@ angular.module('aastha', ['ionic'])
                 }
             })
             .state('ngolanding.ngo', {
-                url: "/facts",
+                url: "/listing",
                 views: {
                     'tab-ngo': {
                         templateUrl: "templates/ngo/ngolisting.html"
@@ -61,10 +65,20 @@ angular.module('aastha', ['ionic'])
                 }
             })
             .state('ngolanding.profile', {
-                url: "/facts2",
+                url: "/profile",
                 views: {
                     'tab-profile': {
-                        templateUrl: "templates/ngo/profile.html"
+                        templateUrl: "templates/ngo/profile.html",
+                        controller: 'ProfileCtrl'
+                    }
+                }
+            })
+            .state('ngolanding.addItem', {
+                url: "/addItem",
+                views: {
+                    'tab-profile': {
+                        templateUrl: "templates/ngo/addItem.html",
+                        controller: 'ContribCtrl'
                     }
                 }
             });
@@ -75,17 +89,14 @@ angular.module('aastha', ['ionic'])
     .controller('ListingCtrl', function($scope, $state) {
         $scope.items = [{
             id: 1,
-            item: 'Asprin',
-            type: 'Medicines',
-            count: 500,
-            ngo: 'NGO1'
+            item: 'Engineering Maths- 1 sem',
+            type: 'Books',
+            count: 2
         }, {
             id: 2,
-            item: 'Laptop',
-            type: 'Electronics',
-            count: 3,
-            ngo: 'NGO1'
-
+            item: 'chemistry 1st PU',
+            type: 'Books',
+            count: 2
         }];
     })
     .controller('LoginCtrl', function($scope, $state, $ionicLoading) {
@@ -114,8 +125,10 @@ angular.module('aastha', ['ionic'])
 
                 },
                 error: function(user, error) {
+                    $ionicLoading.hide();
                     // Show the error message somewhere and let the user try again.
                     alert("Error: " + error.code + " " + error.message);
+
                 }
             });
 
@@ -134,10 +147,91 @@ angular.module('aastha', ['ionic'])
                     $state.go('ngolanding.home');
                 },
                 error: function(user, error) {
+                    $ionicLoading.hide();
                     // The login failed. Check error to see why.
                     alert("error!");
                 }
             });
         };
 
-    });
+    })
+
+.controller('ContribCtrl', function($scope, Camera, $ionicLoading, $state) {
+        $scope.contribution = {};
+        $scope.getPhoto = function() {
+                console.log('Getting camera');
+                Camera.getPicture({
+                    quality: 75,
+                    targetWidth: 320,
+                    targetHeight: 320,
+                    saveToPhotoAlbum: false
+                }).then(function(imageURI) {
+                    console.log(imageURI);
+                    $scope.lastPhoto = imageURI;
+                }, function(err) {
+                    console.err(err);
+                });
+            } // end getPhoto
+
+        $scope.submitContrib = function() {
+
+                var Contribution = Parse.Object.extend("Contribution");
+                var contrib = new Contribution();
+
+                contrib.set("category", $scope.contribution.category);
+                contrib.set("amount", $scope.contribution.amount);
+                contrib.set("count", $scope.contribution.count);
+                contrib.set("comments", $scope.contribution.comments);
+                var relation = contrib.relation("username");
+                var currentUser = Parse.User.current();
+                if (currentUser) {
+                    relation.add(currentUser);
+                    // do stuff with the user
+                } else {
+                    // show the signup or login page
+                }
+                $ionicLoading.show({
+                    template: 'Saving Data...'
+                });
+                contrib.save(null, {
+                    success: function(object) {
+                        $ionicLoading.hide();
+                        // Execute any logic that should take place after the object is saved.
+                        alert('New object created with objectId: ' + object.id);
+                    },
+                    error: function(object, error) {
+                        $ionicLoading.hide();
+                        // Execute any logic that should take place if the save fails.
+                        // error is a Parse.Error with an error code and message.
+                        alert('Failed to create new object, with error code: ' + error.message);
+                    }
+                });
+
+                // contribObject.save(temp).then(function(object) {
+                //     $ionicLoading.hide();
+                //     alert("yay! it worked");
+                //     $state.go('ngolanding.home');
+                // }, function(err) {
+                //     console.log(err);
+                //     $ionicLoading.hide();
+
+                // });
+            } // end submitContrib
+    })
+    .factory('Camera', ['$q', function($q) {
+
+        return {
+            getPicture: function(options) {
+                var q = $q.defer();
+
+                navigator.camera.getPicture(function(result) {
+                    // Do any magic you need
+                    q.resolve(result);
+                }, function(err) {
+                    q.reject(err);
+                }, options);
+
+                return q.promise;
+            }
+        }
+    }]);
